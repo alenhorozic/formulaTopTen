@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using formulaTopTen.Models;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +11,31 @@ using System.Threading.Tasks;
 namespace formulaTopTen.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("MyPolicy")]
     [ApiController]
     public class ComentController : ControllerBase
     {
         // GET: api/<ComentController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Coment> Get()
         {
-            return new string[] { "value1", "value2" };
+            using (var context = new ApplikationDbContext())
+            {
+                var coment = context.coment.ToArray();
+                return coment;
+            }
         }
 
         // GET api/<ComentController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Coment Get(int id)
         {
-            return "value";
+            using (var context = new ApplikationDbContext())
+            {
+                var coment = context.coment.Find(id);
+
+                return coment;
+            }
         }
 
         // POST api/<ComentController>
