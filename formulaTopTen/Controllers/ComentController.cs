@@ -15,28 +15,32 @@ namespace formulaTopTen.Controllers
     [ApiController]
     public class ComentController : ControllerBase
     {
-        // GET: api/<ComentController>
-        [HttpGet]
-        public IEnumerable<Coment> Get()
+        private readonly ApplikationDbContext _dbContext;
+
+        public ComentController(ApplikationDbContext dbContext)
         {
-            using (var context = new ApplikationDbContext())
-            {
-                var coment = context.coment.ToArray();
-                return coment;
-            }
+            _dbContext = dbContext;
+        }
+
+        // GET: api/<ComentController>
+        [HttpGet("{id}")]
+        public IEnumerable<Coment> Get(int id)
+        {
+                var coments = _dbContext.coment.Where(x => x.driverId == id).ToArray();
+                return coments;
         }
 
         // GET api/<ComentController>/5
-        [HttpGet("{id}")]
-        public Coment Get(int id)
-        {
-            using (var context = new ApplikationDbContext())
-            {
-                var coment = context.coment.Find(id);
+        //[HttpGet("{id}")]
+        //public Coment Get(int id)
+        //{
+        //    using (var context = new ApplikationDbContext())
+        //    {
+        //        var coment = context.coment.Find(id);
 
-                return coment;
-            }
-        }
+        //        return coment;
+        //    }
+        //}
 
         // POST api/<ComentController>
         [HttpPost]

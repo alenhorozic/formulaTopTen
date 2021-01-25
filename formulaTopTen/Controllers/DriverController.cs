@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,14 +17,25 @@ namespace formulaTopTen.Controllers
     [ApiController]
     public class DriverController : ControllerBase
     {
+        private readonly ApplikationDbContext _dbContext;
+
+        public DriverController(ApplikationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         // GET: api/<DriverController>
         [HttpGet("GetAll")]
         public IEnumerable<Driver> GetAll()
         {
-            using (var context = new ApplikationDbContext())
+            try
             {
-                var drivers = context.driver.Include(c => c.coments).ToArray();
-                return drivers;
+                 var drivers = _dbContext.driver.Include(c => c.coments).ToArray();
+                 return drivers;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
             }
         }
 
