@@ -28,6 +28,7 @@ namespace formulaTopTen
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMemoryCache();
 
             services.AddDbContext<ApplikationDbContext>(options =>
                 options.UseSqlServer(

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,20 +19,31 @@ namespace formulaTopTen.Controllers
     public class DriverController : ControllerBase
     {
         private readonly ApplikationDbContext _dbContext;
+        private readonly IMemoryCache _memoryCache;
 
-        public DriverController(ApplikationDbContext dbContext)
+        public DriverController(ApplikationDbContext dbContext, IMemoryCache memoryCache)
         {
             _dbContext = dbContext;
+            _memoryCache = memoryCache;
         }
 
         // GET: api/<DriverController>
         [HttpGet("GetAll")]
         public IEnumerable<Driver> GetAll()
         {
+            var cacheKey = $"Get_All_Drivers-";
+
+            if (_memoryCache.TryGetValue(cacheKey, out string cachedValue))
+                return (IEnumerable<Driver>)Ok(cachedValue);
+
             try
             {
                  var drivers = _dbContext.driver.Include(c => c.coments).ToArray();
-                 return drivers;
+                 
+
+                _memoryCache.Set(cacheKey, drivers);
+
+                return drivers;
             }
             catch (Exception ex)
             {
