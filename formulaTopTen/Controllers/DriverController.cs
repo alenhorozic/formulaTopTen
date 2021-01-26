@@ -23,20 +23,20 @@ namespace formulaTopTen.Controllers
 
         public DriverController(ApplikationDbContext dbContext, IMemoryCache memoryCache)
         {
-            _dbContext = dbContext;
-            _memoryCache = memoryCache;
+            _dbContext = dbContext;                     // dependecy injection  
+            _memoryCache = memoryCache;                 // dependecy injection
         }
 
         // GET: api/<DriverController>
         [HttpGet("GetAll")]
         public IEnumerable<Driver> GetAll()
         {
-            var cacheKey = $"Get_All_Drivers-";
+            var cacheKey = $"Get_All_Drivers-";                                    // memoryCache
 
             if (_memoryCache.TryGetValue(cacheKey, out string cachedValue))
                 return (IEnumerable<Driver>)Ok(cachedValue);
 
-            try
+            try                                                                       // exception
             {
                  var drivers = _dbContext.driver.Include(c => c.coments).ToArray();
                  

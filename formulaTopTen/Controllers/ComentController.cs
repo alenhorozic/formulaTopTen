@@ -19,7 +19,7 @@ namespace formulaTopTen.Controllers
 
         public ComentController(ApplikationDbContext dbContext)
         {
-            _dbContext = dbContext;
+            _dbContext = dbContext;                        // dependecy injection
         }
 
         // GET: api/<ComentController>
