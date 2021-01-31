@@ -25,8 +25,8 @@ There are 2 solution in this project, databases in SQLserver and project consumi
 * Comment table will have comment comentId, description, driverId,
 
                            **********START UP PROJECT*************
-1. First go to https://github.com/alenhorozic/formulaTopTen and download beckend file. Sen on
-               https://github.com/alenhorozic/formulaFrontEnd take a frontend solution.
+1. First go to https://github.com/alenhorozic/formulaTopTen and download beckend file. Go to formulaFrontEnd
+               https://github.com/alenhorozic/formulaFrontEnd download frontend solution.
 
 2. Set up connection to sqlServer you need to change conection string i appsettnings.jon file.
   in formulaTopTen solution.
