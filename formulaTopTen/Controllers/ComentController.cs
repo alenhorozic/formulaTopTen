@@ -49,21 +49,10 @@ namespace formulaTopTen.Controllers
             }
         }
 
-        // GET api/<ComentController>/5
-        //[HttpGet("{id}")]
-        //public Coment Get(int id)
-        //{
-        //    using (var context = new ApplikationDbContext())
-        //    {
-        //        var coment = context.coment.Find(id);
-
-        //        return coment;
-        //    }
-        //}
-
         // POST api/<ComentController>
         [HttpPost]
         public void Post([FromBody] string value)
+
         {
         }
 
